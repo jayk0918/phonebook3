@@ -23,7 +23,7 @@ public class PhoneController {
 		PhoneDao phoneDao = new PhoneDao();
 		int count = phoneDao.dbInsert(personVo);
 		System.out.println(count);
-		return "";
+		return "/WEB-INF/views/writeForm.jsp";
 	}
 	
 	@RequestMapping(value="/writeForm", method={RequestMethod.GET, RequestMethod.POST})

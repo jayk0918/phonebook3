@@ -17,7 +17,7 @@
 
 </p>
 
-<form action = "" method = "get">
+<form action = "/phonebook3/write" method = "get">
 	<label for = "name">이름(name)</label>
 	<input type = "text" name = "name" value = "">
 	
@@ -31,7 +31,6 @@
 	<label for = "company">회사(company)</label>
 	<input type = "text" name = "company" value = "">
 	
-	<input action =""></input>
 	<button type = "submit">등록</button>
 </form>
 
