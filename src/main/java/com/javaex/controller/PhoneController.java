@@ -9,7 +9,6 @@ import com.javaex.dao.PhoneDao;
 import com.javaex.vo.PersonVo;
 
 @Controller
-//@RequestMapping(value="/guest")
 public class PhoneController {
 
 	@RequestMapping(value="/write", method={RequestMethod.GET, RequestMethod.POST})
@@ -35,6 +34,7 @@ public class PhoneController {
 	
 	@RequestMapping(value="/test", method={RequestMethod.GET, RequestMethod.POST})
 	public String test() {
+		System.out.println("PhoneController>test()");
 		return "/WEB-INF/views/test.jsp";
 	}
 	
