@@ -105,7 +105,6 @@ public class PhoneDao {
 			count = pstmt.executeUpdate();
 
 			System.out.println("[" + count + "건 수정되었습니다.]");
-			System.out.println();
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);

@@ -89,27 +89,28 @@ public class PhoneController {
 		System.out.println(personId);
 		
 		PhoneDao phoneDao = new PhoneDao();
-		int count = phoneDao.dbDelete(personId);
+		phoneDao.dbDelete(personId);
 		
 		return "redirect:/list";
 	}
 	
-	@RequestMapping(value="/updateForm/{personId}", method={RequestMethod.GET, RequestMethod.POST})
-	public String updateForm(@PathVariable("personId") int personId) {
+	@RequestMapping(value="/updateForm", method={RequestMethod.GET, RequestMethod.POST})
+	public String updateForm(Model model, @RequestParam("personId") int personId) {
 		System.out.println("PhoneController>updateForm()");
 		
-		PersonVo personVo = new PersonVo();
-		personVo.setPersonId(personId);
+		PhoneDao phoneDao = new PhoneDao();
+		PersonVo personVo = phoneDao.getPerson(personId);
+		
+		model.addAttribute("personVo", personVo);
 		
 		return "/WEB-INF/views/updateForm.jsp";
 	}
 	
-	@RequestMapping(value="/update/{personId}", method={RequestMethod.GET, RequestMethod.POST})
-	public String update(@ModelAttribute PersonVo personVo , @PathVariable("personId") int personId) {
+	@RequestMapping(value="/update", method={RequestMethod.GET, RequestMethod.POST})
+	public String update(@ModelAttribute PersonVo personVo) {
 		System.out.println("PhoneController>update()");
 		
 		PhoneDao phoneDao = new PhoneDao();
-		personVo.setPersonId(personId);
 		phoneDao.dbUpdate(personVo);
 		
 		
