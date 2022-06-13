@@ -115,7 +115,7 @@ public class PhoneDao {
 	}
 
 	// delete
-	public int dbDelete(PersonVo personVo) {
+	public int dbDelete(int personId) {
 		int count = -1;
 		getConnection();
 		try {
@@ -124,7 +124,7 @@ public class PhoneDao {
 			query += " where person_id = ? ";
 
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, personVo.getPersonId());
+			pstmt.setInt(1, personId);
 
 			count = pstmt.executeUpdate();
 			System.out.println("[" + count + "건 삭제되었습니다.]");
