@@ -247,12 +247,9 @@ public class PhoneDao {
 				personVo = new PersonVo(id, name, hp, company);
 			}
 			
-			
 		}catch(SQLException e) {
 			System.out.println("error: " + e);
 		}
-		
-		
 		
 		close();
 		return personVo;

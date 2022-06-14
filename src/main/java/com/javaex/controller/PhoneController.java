@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.javaex.dao.PhoneDao;
+import com.javaex.service.PhoneService;
 import com.javaex.vo.PersonVo;
 
 @Controller
 public class PhoneController {
 	@Autowired
-	private PhoneDao phoneDao;
+	private PhoneService phoneService;
 	
 	
 	@RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
 	public String list(Model model){
 		System.out.println("PhoneController>list()");
 		
-		List<PersonVo> pList = phoneDao.dbSelect();
+		List<PersonVo> pList = phoneService.getPersonList();
 		
 		model.addAttribute("pList" , pList);
 		
@@ -40,8 +40,7 @@ public class PhoneController {
 		// @RequestParam( value = “age“, request=false, defaultValue=“-1”) int age
 		// RequestParam이 선택적으로 값을 수용할 경우 위와 같이 강제 값 설정을 해주어야 함
 		
-		int count = phoneDao.dbInsert(personVo);
-		System.out.println(count);
+		phoneService.personInsert(personVo);
 		return "redirect:/list";
 	}
 	
@@ -54,8 +53,7 @@ public class PhoneController {
 		PersonVo personVo = new PersonVo(name, hp, company);
 		System.out.println(personVo);
 		
-		int count = phoneDao.dbInsert(personVo);
-		System.out.println(count);
+		phoneService.personInsert(personVo);
 		return "redirect:/list";
 	}
 	
@@ -77,7 +75,7 @@ public class PhoneController {
 		System.out.println("PhoneController>delete()");
 		System.out.println(personId);
 		
-		int count = phoneDao.dbDelete(personId);
+		phoneService.personDelete(personId);
 		
 		return "redirect:/list";
 	}
@@ -88,7 +86,7 @@ public class PhoneController {
 		System.out.println("PhoneController>delete()");
 		System.out.println(personId);
 		
-		phoneDao.dbDelete(personId);
+		phoneService.personDelete(personId);
 		
 		return "redirect:/list";
 	}
@@ -97,7 +95,7 @@ public class PhoneController {
 	public String updateForm(Model model, @RequestParam("personId") int personId) {
 		System.out.println("PhoneController>updateForm()");
 		
-		PersonVo personVo = phoneDao.getPerson(personId);
+		PersonVo personVo = phoneService.getPerson(personId);
 		
 		model.addAttribute("personVo", personVo);
 		
@@ -108,8 +106,7 @@ public class PhoneController {
 	public String update(@ModelAttribute PersonVo personVo) {
 		System.out.println("PhoneController>update()");
 		
-		phoneDao.dbUpdate(personVo);
-		
+		phoneService.personUpdate(personVo);
 		
 		return "redirect:/list";
 	}
