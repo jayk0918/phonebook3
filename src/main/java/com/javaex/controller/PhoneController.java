@@ -2,6 +2,7 @@ package com.javaex.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,17 +16,19 @@ import com.javaex.vo.PersonVo;
 
 @Controller
 public class PhoneController {
+	@Autowired
+	private PhoneDao phoneDao;
+	
 	
 	@RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
 	public String list(Model model){
 		System.out.println("PhoneController>list()");
 		
-		PhoneDao phoneDao = new PhoneDao();
 		List<PersonVo> pList = phoneDao.dbSelect();
 		
 		model.addAttribute("pList" , pList);
 		
-		return "/WEB-INF/views/list.jsp";
+		return "list";
 	}
 	
 	@RequestMapping(value="/write", method={RequestMethod.GET, RequestMethod.POST})
@@ -37,7 +40,6 @@ public class PhoneController {
 		// @RequestParam( value = “age“, request=false, defaultValue=“-1”) int age
 		// RequestParam이 선택적으로 값을 수용할 경우 위와 같이 강제 값 설정을 해주어야 함
 		
-		PhoneDao phoneDao = new PhoneDao();
 		int count = phoneDao.dbInsert(personVo);
 		System.out.println(count);
 		return "redirect:/list";
@@ -52,7 +54,6 @@ public class PhoneController {
 		PersonVo personVo = new PersonVo(name, hp, company);
 		System.out.println(personVo);
 		
-		PhoneDao phoneDao = new PhoneDao();
 		int count = phoneDao.dbInsert(personVo);
 		System.out.println(count);
 		return "redirect:/list";
@@ -61,13 +62,13 @@ public class PhoneController {
 	@RequestMapping(value="/writeForm", method={RequestMethod.GET, RequestMethod.POST})
 	public String writeForm() {
 		System.out.println("PhoneController>writeForm()");
-		return "/WEB-INF/views/writeForm.jsp";
+		return "writeForm";
 	}
 	
 	@RequestMapping(value="/test", method={RequestMethod.GET, RequestMethod.POST})
 	public String test() {
 		System.out.println("PhoneController>test()");
-		return "/WEB-INF/views/test.jsp";
+		return "test";
 	}
 	
 	/*
@@ -76,7 +77,6 @@ public class PhoneController {
 		System.out.println("PhoneController>delete()");
 		System.out.println(personId);
 		
-		PhoneDao phoneDao = new PhoneDao();
 		int count = phoneDao.dbDelete(personId);
 		
 		return "redirect:/list";
@@ -88,7 +88,6 @@ public class PhoneController {
 		System.out.println("PhoneController>delete()");
 		System.out.println(personId);
 		
-		PhoneDao phoneDao = new PhoneDao();
 		phoneDao.dbDelete(personId);
 		
 		return "redirect:/list";
@@ -98,26 +97,20 @@ public class PhoneController {
 	public String updateForm(Model model, @RequestParam("personId") int personId) {
 		System.out.println("PhoneController>updateForm()");
 		
-		PhoneDao phoneDao = new PhoneDao();
 		PersonVo personVo = phoneDao.getPerson(personId);
 		
 		model.addAttribute("personVo", personVo);
 		
-		return "/WEB-INF/views/updateForm.jsp";
+		return "updateForm";
 	}
 	
 	@RequestMapping(value="/update", method={RequestMethod.GET, RequestMethod.POST})
 	public String update(@ModelAttribute PersonVo personVo) {
 		System.out.println("PhoneController>update()");
 		
-		PhoneDao phoneDao = new PhoneDao();
 		phoneDao.dbUpdate(personVo);
 		
 		
 		return "redirect:/list";
 	}
-	
-	
-	
-	
 }
